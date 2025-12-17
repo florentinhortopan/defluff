@@ -21,9 +21,12 @@ const PRODUCTS = [
   }
 ];
 const load = ({ params }) => {
+  if (!params.slug) {
+    throw error(400, "Missing product slug");
+  }
   const product = PRODUCTS.find((p) => p.slug === params.slug);
   if (!product) {
-    throw error(404, "Product not found");
+    throw error(404, `Product "${params.slug}" not found`);
   }
   return {
     product
