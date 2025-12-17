@@ -3,6 +3,8 @@
 	import { goto } from '$app/navigation';
 	
 	export let data: PageData;
+	
+	// Data is guaranteed to exist from load function
 	const { product } = data;
 </script>
 
