@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, cpSync, existsSync, mkdirSync } from 'fs';
+import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -12,9 +13,6 @@ const rootPackageJson = JSON.parse(
 );
 
 const kitVersion = rootPackageJson.dependencies['@sveltejs/kit'] || '^2.0.0';
-
-// Find all function package.json files and update them
-import { readdirSync, statSync } from 'fs';
 
 function findFunctionDirs(dir) {
 	const results = [];
@@ -39,10 +37,15 @@ function findFunctionDirs(dir) {
 
 const vercelOutput = join(__dirname, '..', '.vercel', 'output', 'functions');
 const functionDirs = findFunctionDirs(vercelOutput);
+const rootNodeModules = join(__dirname, '..', 'node_modules', '@sveltejs', 'kit');
 
 for (const funcDir of functionDirs) {
 	const packageJsonPath = join(funcDir, 'package.json');
+	const funcNodeModules = join(funcDir, 'node_modules');
+	const funcKitPath = join(funcNodeModules, '@sveltejs', 'kit');
+	
 	try {
+		// Update package.json
 		const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 		packageJson.dependencies = packageJson.dependencies || {};
 		if (!packageJson.dependencies['@sveltejs/kit']) {
@@ -50,8 +53,26 @@ for (const funcDir of functionDirs) {
 			writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
 			console.log(`Updated ${packageJsonPath}`);
 		}
+		
+		// Copy @sveltejs/kit to function's node_modules
+		if (existsSync(rootNodeModules)) {
+			// Ensure directories exist
+			if (!existsSync(funcNodeModules)) {
+				mkdirSync(funcNodeModules, { recursive: true });
+			}
+			if (!existsSync(join(funcNodeModules, '@sveltejs'))) {
+				mkdirSync(join(funcNodeModules, '@sveltejs'), { recursive: true });
+			}
+			
+			// Copy the package
+			if (!existsSync(funcKitPath)) {
+				cpSync(rootNodeModules, funcKitPath, { recursive: true });
+				console.log(`Copied @sveltejs/kit to ${funcKitPath}`);
+			}
+		} else {
+			console.warn(`Source @sveltejs/kit not found at ${rootNodeModules}`);
+		}
 	} catch (err) {
-		// File doesn't exist or can't be read
+		console.error(`Error processing ${funcDir}:`, err.message);
 	}
 }
-
