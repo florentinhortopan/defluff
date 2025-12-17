@@ -17,7 +17,7 @@
 			<a href="/" class="btn btn-primary" on:click|preventDefault={() => goto('/')}>
 				Go Home
 			</a>
-			<button class="btn btn-secondary" on:click={() => window.location.reload()}>
+			<button class="btn btn-secondary" on:click={() => { if (typeof window !== 'undefined') window.location.reload(); }}>
 				Reload Page
 			</button>
 		</div>

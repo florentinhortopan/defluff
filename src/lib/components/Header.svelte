@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { isMenuOpen, toggleMenu, closeMenu } from '$lib/stores/navigation';
 	import { goto } from '$app/navigation';
 
