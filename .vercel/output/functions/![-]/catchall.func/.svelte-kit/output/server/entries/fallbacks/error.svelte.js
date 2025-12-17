@@ -1,5 +1,4 @@
-import { s as subscribe } from "../../chunks/utils2.js";
-import { g as getContext, c as create_ssr_component, e as escape } from "../../chunks/ssr.js";
+import { g as getContext, c as create_ssr_component, a as subscribe, e as escape } from "../../chunks/ssr.js";
 import "@sveltejs/kit/internal";
 import "../../chunks/exports.js";
 import "../../chunks/utils.js";

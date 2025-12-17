@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { products } from '$lib/stores/products';
+	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	
+	export let data: PageData;
 </script>
 
 <svelte:head>
@@ -16,7 +18,7 @@
 		</p>
 		
 		<div class="products-grid">
-			{#each $products as product}
+			{#each data.products as product}
 				<article class="product-card">
 					<h2>{product.name}</h2>
 					<p class="product-tagline">{product.tagline}</p>

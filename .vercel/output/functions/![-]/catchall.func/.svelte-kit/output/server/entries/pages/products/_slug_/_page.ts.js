@@ -1,9 +1,27 @@
 import { error } from "@sveltejs/kit";
-import { g as get_store_value } from "../../../../chunks/utils2.js";
-import { p as products } from "../../../../chunks/products.js";
+const PRODUCTS = [
+  {
+    id: "puxa-ai",
+    name: "Puxa.ai",
+    slug: "puxa-ai",
+    tagline: "Transform attention into understanding, and understanding into action",
+    description: 'Puxa.ai helps people transform social media and web content into structured knowledge and actionable insights. Built from the core mission of helping people "defluff" information overload.',
+    features: [
+      "Content intelligence and analysis",
+      "Knowledge extraction from media",
+      "Structured information architecture",
+      "Actionable insights generation"
+    ],
+    capabilities: [
+      "Analyze video, audio, and web content",
+      "Extract key concepts and definitions",
+      "Create structured knowledge cards",
+      "Generate guided learning paths"
+    ]
+  }
+];
 const load = ({ params }) => {
-  const allProducts = get_store_value(products);
-  const product = allProducts.find((p) => p.slug === params.slug);
+  const product = PRODUCTS.find((p) => p.slug === params.slug);
   if (!product) {
     throw error(404, "Product not found");
   }

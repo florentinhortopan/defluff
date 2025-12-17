@@ -1,8 +1,7 @@
-import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import type { Product } from '$lib/types';
 
-// Static product data - in a real app, this would come from a database or API
+// Static product data - matches the store data
 const PRODUCTS: Product[] = [
 	{
 		id: 'puxa-ai',
@@ -25,17 +24,9 @@ const PRODUCTS: Product[] = [
 	}
 ];
 
-export const load: PageLoad = ({ params }) => {
-	const product = PRODUCTS.find((p) => p.slug === params.slug);
-	
-	if (!product) {
-		throw error(404, {
-			message: 'Product not found'
-		});
-	}
-	
+export const load: PageLoad = () => {
 	return {
-		product
+		products: PRODUCTS
 	};
 };
 
