@@ -1,0 +1,11 @@
+# SvelteKit Project Rules
+- Use Svelte stores for state management, not React hooks
+- Separate data logic into stores, keep components presentation-only
+- Follow SvelteKit file-based routing conventions
+- Use TypeScript with proper typing
+- Prefer Svelte's reactive syntax ($: for derived state)
+- Use SvelteKit's built-in features (load functions, form actions)
+- Mobile-first responsive design
+- Keep components simple and focused
+- Use semantic HTML and accessibility best practices
+
