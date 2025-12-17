@@ -96,8 +96,16 @@ a:hover {
 	padding: 0 var(--spacing-md);
 }
 
+div.container {
+	width: 100%;
+}
+
 .container-narrow {
 	max-width: var(--max-width-narrow);
+}
+
+.page-header.container-narrow {
+	margin: 0 auto;
 }
 
 .container-wide {

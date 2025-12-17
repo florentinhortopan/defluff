@@ -92,7 +92,13 @@
 
 <style>
 	.page-header {
+		width: 100%;
 		margin-bottom: var(--spacing-2xl);
+	}
+
+	.page-header.container-narrow {
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.lead {
