@@ -1,11 +1,4 @@
 {
-	"framework": "sveltekit",
-	"buildCommand": "npm run build",
-	"installCommand": "npm ci",
-	"functions": {
-		"**": {
-			"runtime": "nodejs20.x"
-		}
-	}
+	"framework": "sveltekit"
 }
 
